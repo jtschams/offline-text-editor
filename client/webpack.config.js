@@ -14,6 +14,7 @@ module.exports = () => {
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
+      publicPath: ''
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -33,10 +34,13 @@ module.exports = () => {
         background_color: '#225CA3',
         orientation:'portrait',
         display: 'standalone',
+        fingerprints: false,
         icons: [
           {
-            src: path.resolve('./favicon.ico'),
-            sizes: [96, 128, 144, 192, 256, 384, 512]
+            src: path.resolve('./src/images/logo.png'),
+            sizes: [96, 128, 144, 192, 256, 384, 512],
+            destination: path.join('assets/icons/'),
+            purpose: 'any maskable'
           }
         ]
       })
@@ -46,7 +50,7 @@ module.exports = () => {
       rules: [
         {
           test: /\.css$/i,
-          loader: 'css-loader'
+          use: ['style-loader', 'css-loader']
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif|ico)$/i,
